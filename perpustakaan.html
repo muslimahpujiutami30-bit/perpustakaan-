@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perpustakaan Girl</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    body{
+      background:linear-gradient(135deg,#ffd6e7,#ffe8f3,#f9d8ff);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    .container{
+      display:flex;
+      min-height:100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar{
+      width:270px;
+      background:linear-gradient(180deg,#ff69b4,#c084fc,#7dd3fc);
+      color:white;
+      padding:30px 20px;
+      box-shadow:5px 0 20px rgba(0,0,0,0.1);
+    }
+
+    .logo{
+      text-align:center;
+      margin-bottom:50px;
+    }
+
+    .logo i{
+      font-size:60px;
+      margin-bottom:10px;
+    }
+
+    .logo h1{
+      font-size:35px;
+      font-weight:bold;
+    }
+
+    .menu{
+      list-style:none;
+    }
+
+    .menu li{
+      margin-bottom:15px;
+    }
+
+    .menu a{
+      display:flex;
+      align-items:center;
+      gap:15px;
+      text-decoration:none;
+      color:white;
+      padding:15px;
+      border-radius:15px;
+      transition:0.3s;
+      font-size:18px;
+    }
+
+    .menu a:hover,
+    .menu .active{
+      background:rgba(255,255,255,0.25);
+      backdrop-filter:blur(10px);
+    }
+
+    /* MAIN */
+    .main{
+      flex:1;
+      padding:25px;
+    }
+
+    .topbar{
+      background:white;
+      border-radius:25px;
+      padding:25px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:30px;
+      box-shadow:0 10px 25px rgba(255,105,180,0.15);
+    }
+
+    .topbar h1{
+      color:#444;
+      font-size:40px;
+    }
+
+    .topbar p{
+      color:gray;
+      margin-top:5px;
+    }
+
+    .profile{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:18px;
+      color:#ff69b4;
+      font-weight:bold;
+    }
+
+    /* CARD */
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
+      margin-bottom:35px;
+    }
+
+    .card{
+      padding:30px;
+      border-radius:25px;
+      color:white;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .card h2{
+      font-size:28px;
+      margin-bottom:15px;
+    }
+
+    .card h1{
+      font-size:50px;
+    }
+
+    .card i{
+      position:absolute;
+      right:25px;
+      bottom:20px;
+      font-size:70px;
+      opacity:0.3;
+    }
+
+    .pink{
+      background:linear-gradient(135deg,#ff69b4,#ffb6d9);
+    }
+
+    .purple{
+      background:linear-gradient(135deg,#c084fc,#e9d5ff);
+    }
+
+    .blue{
+      background:linear-gradient(135deg,#60a5fa,#7dd3fc);
+    }
+
+    /* BOX */
+    .box{
+      background:white;
+      padding:25px;
+      border-radius:25px;
+      box-shadow:0 10px 25px rgba(255,105,180,0.1);
+      margin-bottom:30px;
+    }
+
+    .box h2{
+      margin-bottom:20px;
+      color:#ff69b4;
+    }
+
+    /* FORM */
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:15px;
+      margin-bottom:20px;
+    }
+
+    input{
+      padding:14px;
+      border:none;
+      border-radius:15px;
+      background:#fff0f7;
+      outline:none;
+      font-size:15px;
+    }
+
+    button{
+      border:none;
+      padding:14px;
+      border-radius:15px;
+      background:linear-gradient(135deg,#ff69b4,#c084fc);
+      color:white;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      transform:scale(1.03);
+    }
+
+    /* TABLE */
+    .table-container{
+      overflow-x:auto;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+    }
+
+    table th{
+      background:linear-gradient(135deg,#ff69b4,#c084fc);
+      color:white;
+      padding:15px;
+      text-align:center;
+    }
+
+    table td{
+      padding:14px;
+      text-align:center;
+      border-bottom:1px solid #f3d4e6;
+    }
+
+    table tr:nth-child(even){
+      background:#fff5fb;
+    }
+
+    /* LOGIN */
+    .login-page{
+      position:fixed;
+      inset:0;
+      background:linear-gradient(135deg,#ffb6d9,#e9d5ff,#7dd3fc);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      z-index:999;
+    }
+
+    .login-box{
+      width:400px;
+      background:white;
+      padding:40px;
+      border-radius:30px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.15);
+      text-align:center;
+    }
+
+    .login-box h1{
+      color:#ff69b4;
+      margin-bottom:25px;
+    }
+
+    .login-box input{
+      width:100%;
+      margin-bottom:15px;
+    }
+
+    .switch{
+      margin-top:15px;
+      color:#666;
+    }
+
+    .switch a{
+      color:#ff69b4;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    @media(max-width:900px){
+      .sidebar{
+        display:none;
+      }
+
+      .topbar{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-page" id="loginPage">
+
+  <div class="login-box">
+    <h1><i class="fa-solid fa-heart"></i>Hallo Perpustakaan</h1>
+
+    <div id="loginForm">
+      <input type="text" id="loginNpm" placeholder="Masukkan NPM">
+      <input type="password" id="loginPassword" placeholder="Masukkan Password">
+      <button onclick="login()">Login</button>
+
+      <div class="switch">
+        Belum punya akun?
+        <a onclick="showRegister()">Daftar</a>
+      </div>
+    </div>
+
+    <div id="registerForm" class="hidden">
+      <input type="text" id="namaDaftar" placeholder="Nama Lengkap">
+      <input type="text" id="npmDaftar" placeholder="NPM">
+      <input type="password" id="passwordDaftar" placeholder="Password">
+      <button onclick="register()">Daftar</button>
+
+      <div class="switch">
+        Sudah punya akun?
+        <a onclick="showLogin()">Login</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WEBSITE -->
+<div class="container">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="logo">
+      <i class="fa-solid fa-book-open-reader"></i>
+      <h1>Library</h1>
+    </div>
+
+    <ul class="menu">
+      <li><a class="active" href="#"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+      <li><a href="#anggota"><i class="fa-solid fa-users"></i> Anggota</a></li>
+      <li><a href="#buku"><i class="fa-solid fa-book"></i> Buku</a></li>
+      <li><a href="#pinjam"><i class="fa-solid fa-right-left"></i> Peminjaman</a></li>
+      <li><a href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+    </ul>
+
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="topbar">
+      <div>
+        <h1>Dashboard</h1>
+        <p>Selamat datang di sistem perpustakaan UNIVED ✨</p>
+      </div>
+
+      <div class="profile">
+        <i class="fa-solid fa-circle-user"></i>
+        <span id="namaUser">Admin</span>
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards">
+
+      <div class="card pink">
+        <h2>Total Buku</h2>
+        <h1 id="jumlahBuku">10</h1>
+        <i class="fa-solid fa-book"></i>
+      </div>
+
+      <div class="card purple">
+        <h2>Total Anggota</h2>
+        <h1 id="jumlahAnggota">6</h1>
+        <i class="fa-solid fa-users"></i>
+      </div>
+
+      <div class="card blue">
+        <h2>Total Pinjam</h2>
+        <h1 id="jumlahPinjam">4</h1>
+        <i class="fa-solid fa-right-left"></i>
+      </div>
+
+    </div>
+
+    <!-- ANGGOTA -->
+    <div class="box" id="anggota">
+      <h2><i class="fa-solid fa-users"></i> Data Anggota</h2>
+
+      <div class="form-grid">
+        <input type="text" id="kodeAnggota" placeholder="Kode Anggota">
+        <input type="text" id="namaAnggota" placeholder="Nama Anggota">
+        <button onclick="tambahAnggota()">Tambah Anggota</button>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Kode</th>
+              <th>Nama</th>
+            </tr>
+          </thead>
+
+          <tbody id="anggotaBody">
+            <tr><td>A001</td><td>Selvia Safitri</td></tr>
+            <tr><td>A002</td><td>Muslimah Puji Utami</td></tr>
+            <tr><td>A003</td><td>Cindy Kartika windari</td></tr>
+            <tr><td>A004</td><td>Anngun Jeni Permata Sari</td></tr>
+            <tr><td>A005</td><td>Zacky Wilham Al Aziz</td></tr>
+            <tr><td>A006</td><td>Muhammad Hafidz Ramadhan</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BUKU -->
+    <div class="box" id="buku">
+      <h2><i class="fa-solid fa-book"></i> Data Buku</h2>
+
+      <div class="form-grid">
+        <input type="text" id="kodeBuku" placeholder="Kode Buku">
+        <input type="text" id="judulBuku" placeholder="Judul Buku">
+        <input type="text" id="pengarang" placeholder="Pengarang">
+        <input type="number" id="tahun" placeholder="Tahun">
+        <button onclick="tambahBuku()">Tambah Buku</button>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Kode</th>
+              <th>Judul</th>
+              <th>Pengarang</th>
+              <th>Tahun</th>
+            </tr>
+          </thead>
+
+          <tbody id="bukuBody">
+            <tr><td>B001</td><td>Laskar Pelangi</td><td>Andrea Hirata</td><td>2005</td></tr>
+            <tr><td>B002</td><td>Bumi</td><td>Tere Liye</td><td>2014</td></tr>
+            <tr><td>B003</td><td>Negeri 5 Menara</td><td>Ahmad Fuadi</td><td>2009</td></tr>
+            <tr><td>B004</td><td>Ketika Cinta Bertasbih</td><td>Habiburrahman El Shirazy</td><td>2007</td></tr>
+            <tr><td>B005</td><td>Dilan 1990</td><td>Pidi Baiq</td><td>2014</td></tr>
+            <tr><td>B006</td><td>My Ice Girl</td><td>Dee Lestari</td><td>2021</td></tr>
+            <tr><td>B007</td><td>The Hidden</td><td>Melanie Golding</td><td>2022</td></tr>
+            <tr><td>B008</td><td>Hujan</td><td>Tere Liye</td><td>2016</td></tr>
+            <tr><td>B009</td><td>Madilog</td><td>Tan Malaka</td><td>1943</td></tr>
+            <tr><td>B010</td><td>Cantik Itu Luka</td><td>Eka Kuniawan</td><td>2002</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PEMINJAMAN -->
+    <div class="box" id="pinjam">
+      <h2><i class="fa-solid fa-right-left"></i> Data Peminjaman</h2>
+
+      <div class="form-grid">
+        <input type="date" id="tglPinjam">
+        <input type="date" id="tglKembali">
+        <input type="text" id="kodePinjam">
+        <input type="text" id="kodeBukuPinjam" placeholder="Kode Buku">
+        <input type="text" id="kodeAnggotaPinjam" placeholder="Kode Anggota">
+        <button onclick="tambahPinjam()">Tambah Pinjam</button>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Tanggal Pinjam</th>
+              <th>Tanggal Kembali</th>
+              <th>Kode Pinjam</th>
+              <th>Kode Buku</th>
+              <th>Kode Anggota</th>
+            </tr>
+          </thead>
+
+          <tbody id="pinjamBody">
+            <tr><td>2026-05-01</td><td>2026-05-07</td><td>P001</td><td>B001</td><td>A001</td></tr>
+            <tr><td>2026-05-02</td><td>2026-05-08</td><td>P002</td><td>B002</td><td>A002</td></tr>
+            <tr><td>2026-05-03</td><td>2026-05-09</td><td>P003</td><td>B003</td><td>A003</td></tr>
+            <tr><td>2026-05-04</td><td>2026-05-10</td><td>P004</td><td>B004</td><td>A004</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  let users = [
+    {
+      nama:'Admin',
+      npm:'12345',
+      password:'admin123'
+    }
+  ];
+
+  function showRegister(){
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('registerForm').classList.remove('hidden');
+  }
+
+  function showLogin(){
+    document.getElementById('registerForm').classList.add('hidden');
+    document.getElementById('loginForm').classList.remove('hidden');
+  }
+
+  function register(){
+    const nama = document.getElementById('namaDaftar').value;
+    const npm = document.getElementById('npmDaftar').value;
+    const password = document.getElementById('passwordDaftar').value;
+
+    if(nama=='' || npm=='' || password==''){
+      alert('Isi semua data!');
+      return;
+    }
+
+    users.push({nama,npm,password});
+
+    alert('Pendaftaran berhasil!');
+
+    showLogin();
+  }
+
+  function login(){
+    const npm = document.getElementById('loginNpm').value;
+    const password = document.getElementById('loginPassword').value;
+
+    const user = users.find(u => u.npm===npm && u.password===password);
+
+    if(user){
+      document.getElementById('loginPage').style.display='none';
+      document.getElementById('namaUser').innerHTML=user.nama;
+    }else{
+      alert('NPM atau Password salah!');
+    }
+  }
+
+  function logout(){
+    document.getElementById('loginPage').style.display='flex';
+  }
+
+  function tambahAnggota(){
+    const kode = document.getElementById('kodeAnggota').value;
+    const nama = document.getElementById('namaAnggota').value;
+
+    if(kode=='' || nama=='') return alert('Isi data anggota');
+
+    document.getElementById('anggotaBody').innerHTML += `
+      <tr>
+        <td>${kode}</td>
+        <td>${nama}</td>
+      </tr>
+    `;
+
+    document.getElementById('jumlahAnggota').innerHTML = document.getElementById('anggotaBody').rows.length;
+  }
+
+  function tambahBuku(){
+    const kode = document.getElementById('kodeBuku').value;
+    const judul = document.getElementById('judulBuku').value;
+    const pengarang = document.getElementById('pengarang').value;
+    const tahun = document.getElementById('tahun').value;
+
+    if(kode=='' || judul=='' || pengarang=='' || tahun=='') return alert('Isi data buku');
+
+    document.getElementById('bukuBody').innerHTML += `
+      <tr>
+        <td>${kode}</td>
+        <td>${judul}</td>
+        <td>${pengarang}</td>
+        <td>${tahun}</td>
+      </tr>
+    `;
+
+    document.getElementById('jumlahBuku').innerHTML = document.getElementById('bukuBody').rows.length;
+  }
+
+  function tambahPinjam(){
+    const pinjam = document.getElementById('tglPinjam').value;
+    const kembali = document.getElementById('tglKembali').value;
+    const kode = document.getElementById('kodePinjam').value;
+    const buku = document.getElementById('kodeBukuPinjam').value;
+    const anggota = document.getElementById('kodeAnggotaPinjam').value;
+
+    if(pinjam=='' || kembali=='' || kode=='' || buku=='' || anggota=='') return alert('Isi data peminjaman');
+
+    document.getElementById('pinjamBody').innerHTML += `
+      <tr>
+        <td>${pinjam}</td>
+        <td>${kembali}</td>
+        <td>${kode}</td>
+        <td>${buku}</td>
+        <td>${anggota}</td>
+      </tr>
+    `;
+
+    document.getElementById('jumlahPinjam').innerHTML = document.getElementById('pinjamBody').rows.length;
+  }
+</script>
+
+</body>
+</html>
